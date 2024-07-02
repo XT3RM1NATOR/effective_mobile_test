@@ -22,5 +22,7 @@ func RegisterRoutes(e *echo.Echo, cfg *config.Config, db *sqlx.DB) {
 	e.POST("/tasks", ic.AddTaskHandler)
 	e.GET("/tasks/:userId", ic.GetTasksByUserIdHandler)
 	e.PUT("/tasks", ic.UpdateTaskHandler)
+	e.PUT("/tasks/:taskId/finish", ic.FinishTaskHandler)
 	e.DELETE("/tasks/:taskId", ic.DeleteTaskByIdHandler)
+
 }

@@ -118,6 +118,10 @@ func (s *TaskTrackerServiceImpl) UpdateTask(taskId int, taskName string) (*entit
 	return task, nil
 }
 
+func (s *TaskTrackerServiceImpl) FinishTask(taskId int) error {
+	return s.taskTrackerRepo.FinishTask(taskId)
+}
+
 func (s *TaskTrackerServiceImpl) DeleteTaskById(taskId int) error {
 	err := s.taskTrackerRepo.DeleteTaskById(taskId)
 	if err != nil {

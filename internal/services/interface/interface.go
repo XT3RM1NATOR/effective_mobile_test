@@ -13,4 +13,5 @@ type TaskTrackerRepository interface {
 	GetTaskById(taskId int) (*entity.Task, error)
 	UpdateTask(task *entity.Task) error
 	DeleteTaskById(taskId int) error
+	FinishTask(taskId int) error
 }

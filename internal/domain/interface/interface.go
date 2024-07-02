@@ -15,4 +15,5 @@ type TaskTrackerService interface {
 	GetTasksByUserId(userId, limit, offset int) ([]model.TaskResponse, error)
 	UpdateTask(taskId int, taskName string) (*entity.Task, error)
 	DeleteTaskById(taskID int) error
+	FinishTask(taskId int) error
 }

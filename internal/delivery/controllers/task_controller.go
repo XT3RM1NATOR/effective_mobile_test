@@ -212,6 +212,31 @@ func (c *TaskTrackerController) UpdateTaskHandler(ctx echo.Context) error {
 	return ctx.JSON(http.StatusOK, task)
 }
 
+// FinishTaskHandler marks a task as finished based on the task ID provided in the request.
+// It updates the task's end time and sets its status to finished.
+// @Summary Finish a task
+// @Description Marks a task as finished by updating its end time and setting its status to finished.
+// @Tags TaskTracker
+// @Accept json
+// @Produce json
+// @Param taskId path int true "Task Id"
+// @Success 200 {object} model.SuccessResponse "Task finished successfully"
+// @Failure 400 {object} model.ErrorResponse "Invalid task ID"
+// @Failure 500 {object} model.ErrorResponse "Failed to finish task"
+// @Router /tasks/{taskId}/finish [put]
+func (c *TaskTrackerController) FinishTaskHandler(ctx echo.Context) error {
+	taskId, err := strconv.Atoi(ctx.Param("taskId"))
+	if err != nil {
+		return ctx.JSON(http.StatusBadRequest, model.ErrorResponse{Error: "invalid task ID"})
+	}
+
+	if err = c.taskTrackerService.FinishTask(taskId); err != nil {
+		return ctx.JSON(http.StatusInternalServerError, model.ErrorResponse{Error: err.Error()})
+	}
+
+	return ctx.JSON(http.StatusOK, model.SuccessResponse{Message: "task finished successfully"})
+}
+
 // DeleteTaskByIdHandler deletes a task by Id.
 // @Summary Delete task by Id
 // @Tags Tasks

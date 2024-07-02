@@ -85,6 +85,13 @@ func (r *TaskTrackerRepositoryImpl) GetTasksByUserId(userId, limit, offset int) 
 	return tasks, err
 }
 
+func (r *TaskTrackerRepositoryImpl) FinishTask(taskId int) error {
+	query := `UPDATE tasks SET end_time = NOW(), is_finished = TRUE WHERE id = $1`
+
+	_, err := r.database.Exec(query, taskId)
+	return err
+}
+
 func (r *TaskTrackerRepositoryImpl) GetTaskById(taskId int) (*entity.Task, error) {
 	var task entity.Task
 	query := `SELECT * FROM tasks WHERE Id = $1`
